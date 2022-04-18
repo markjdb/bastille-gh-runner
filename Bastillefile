@@ -1,0 +1,13 @@
+ARG GITHUB_REPO_URL=
+ARG GITHUB_TOKEN=
+
+CMD [ -n "${GITHUB_REPO_URL}" ] || ( echo "add --arg GITHUB_REPO_URL=<url> to parameters" && false )
+CMD [ -n "${GITHUB_TOKEN}" ] || ( echo "add --arg GITHUB_TOKEN=<token> to parameters" && false )
+
+ARG _GITHUB_ACT_RUNNER_PATH=/root/github-act-runner
+
+PKG git-lite node go bash
+
+CMD git clone --recursive https://github.com/ChristopherHX/github-act-runner.git ${_GITHUB_ACT_RUNNER}
+CMD cd ${_GITHUB_ACT_RUNNER} && go build
+CMD mkdir /root/runner
